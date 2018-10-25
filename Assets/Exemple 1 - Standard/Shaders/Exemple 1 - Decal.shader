@@ -10,7 +10,6 @@
       Tags { "RenderType"="Opaque" "Queue"="Geometry+1" "ForceNoShadowCasting"="True" }
       
       LOD 200
-      
       Offset -1, -1
       
       CGPROGRAM
