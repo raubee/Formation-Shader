@@ -18,7 +18,9 @@ Implementation of customs Lighting models : https://docs.unity3d.com/Manual/SL-S
 
 # Example 3 - Raymarching
 
-![Raymarching](http://g.recordit.co/JuTAx4RlIH.gif)
+<p align="center">
+<img src="http://g.recordit.co/JuTAx4RlIH.gif"></img>
+</p>
 
 Unity implementation of a ray marching shader in a volume : https://www.shadertoy.com/view/4tByzD
 
