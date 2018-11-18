@@ -25,3 +25,8 @@ Implementation of customs Lighting models : https://docs.unity3d.com/Manual/SL-S
 Unity implementation of a ray marching shader in a volume : https://www.shadertoy.com/view/4tByzD
 
 # Example 4 - Volumetric clouds
+
+# Example 5 - Geometric shaders
+
+Wireframe
+
