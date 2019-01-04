@@ -1,4 +1,6 @@
-﻿Shader "Exemple 3/Raymarching"
+﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
+Shader "Exemple 3/Raymarching"
 {
     Properties
     {
@@ -6,10 +8,10 @@
         [Toggle]_Debug("Debug", Float) = 0
         _Specular("Specular", Range(0,2)) = 0
         _Metallic("Metallic", Range(0,2)) = 0
+        [HDR]_EmissionColor("Emission Color", Color) = (0,0,0,0)
         _Round("Round", Range(0,2)) = 0
         _Paste("Paste", Range(0,2)) = 0
-        _Diffraction("Diffraction coef", Range(0,2)) = 1.0
-        _Shininess("Shininess", Range(2,256)) = 0
+        _Displacement("Displacement", Range(0,1)) = 0.1
         [HideInInspector]_WorldPos("World Pos", Vector) = (0,0,0)
     }
     SubShader
@@ -26,16 +28,10 @@
 
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
-        #pragma surface surf Standard alpha:blend  vertex:vert addshadow
+        #pragma surface surf Standard alpha:blend  vertex:vert novertexlights noambient
 
         // Use shader model 3.0 target, to get nicer looking lighting
         #pragma target 3.0
-
-        /*half4 LightingNoLighting (SurfaceOutput s, half3 lightDir, half3 viewDir, half atten) 
-        {
-            return half4(0,0,0,s.Alpha);
-            //return half4(s.Albedo * 0.5f, s.Alpha);
-        }*/
 
         struct Input
         {
@@ -43,6 +39,7 @@
             float3 viewDir;
             float3 worldPos;
             float4 grabUV;
+            float3 worldNormal; INTERNAL_DATA
         };
 
         void vert(inout appdata_full input, out Input o )
@@ -50,6 +47,7 @@
             UNITY_INITIALIZE_OUTPUT(Input, o);
             float4 objPos = UnityObjectToClipPos(input.vertex);
             o.grabUV = ComputeGrabScreenPos(objPos);
+            o.worldNormal = mul(unity_ObjectToWorld, input.normal);
         }
 
         sampler2D _MainTex;
@@ -65,11 +63,14 @@
         float3 _SecondPos;
         float3 _SecondScale;
         float4 _Color;
+        float4 _EmissionColor;
         float _Round;
         float _Paste;
         float _Diffraction;
+        float _Displacement;
 
         #define MAXIMUM_RAY_STEPS 255
+        #define MAX_DIST 200
         #define EPSILON 0.0001
 
         /**** Distance field functions ****/
@@ -119,6 +120,11 @@
             return lerp( d2, d1, h ) + k*h*(1.0-h); 
         }
         
+        float displacement(float3 p)
+        {
+            return sin(10*p.x)*sin(10*p.y)*sin(10*p.z);
+        }
+
         /**** Scene SDF ****/
         float sdfScene(float3 p)
         { 
@@ -130,9 +136,10 @@
             float s2 = sdEllipsoid(p, _SecondScale);
             p += _SecondPos;
 
-            return opSmoothUnion(s1, s2, _Paste);
-            //return sdEllipsoid(p, _ObjectScale / 2.0);
-            //return udRoundBox(p, _ObjectScale / 2.0 - _Round, _Round);
+           float shape = opSmoothUnion(s1, s2, _Paste);
+           float d = displacement(p) * _Displacement;
+
+           return shape + d;
         }
 
         /**** Gradient estimated normal ****/ 
@@ -149,35 +156,34 @@
         /**** Raymarching ****/
         float rayMarch(float3 dir)
         {
-            float maxDist = 100;
             // Create array of 2 float that store [0] -> current distance value, [1] ->  last distance value
-            float2 dist = float2(maxDist, _ProjectionParams.y);
+            float dist = 0;
             
             for(int i = 0; i < MAXIMUM_RAY_STEPS; i++)
             { 
                 // Get last dist point on the direction array
-                float3 p = _WorldSpaceCameraPos + dir * dist.y;
+                float3 p = _WorldSpaceCameraPos + dir * dist;
 
                 // Determine minimal distance from all objects in the scene
-                dist.x = sdfScene(p);
-                
+                float d = sdfScene(p);
+
                 // Are we touching an object ?
-                if(dist.x < EPSILON)
+                if(d < EPSILON)
                 {
                     // Yes so return last depth
-                    return dist.y;
+                    return dist;
                 }
                 
-                dist.y += dist.x;
+                dist += d;
                 
                 // Is there any object in the scene ?
-                if(dist.y >= maxDist)
+                if(dist >= MAX_DIST)
                 {
-                    return maxDist;
+                    break;
                 }
             }
 
-            return maxDist;
+            return dist;
         }
      
         // /**** Determines Classic Phong lighting calculation ****/ 
@@ -214,16 +220,12 @@
         //     vec_diff = lerp(df.rgb, ambient + vec_diff, _Color.a);
             
         //     return  vec_diff + spec; 
-        //     //return df;
         // }
 
         /**** Render ****/
-        void render(float3 dir, float4 grabPos, inout SurfaceOutputStandard o)
+        void render(Input IN, float3 dir, float4 grabPos, inout SurfaceOutputStandard o)
         {
             float hitDist = rayMarch(dir);
-            float4 c = float4(1.0, 1.0, 1.0, 1.0);
-
-            //half4 bgColor = c;
             half4 bgColor = tex2Dproj(_BackgroundTexture, grabPos);
             
             if(!_Debug)
@@ -233,26 +235,21 @@
 
             /*** Didn't hit anything ***/
             if ( hitDist > 100 - EPSILON ) {
-                c = bgColor;
-                o.Normal = 1.0;
                 o.Alpha = 0;
-                o.Metallic = 0;
-                o.Smoothness = 0;
-                o.Emission = 0;
+                return;
             } 
-            else
-            {
-                float3 p = _WorldSpaceCameraPos + dir * hitDist;
-                //c.rgb = phongIllumination(p, dir, grabPos) * _Color.rgb;
-                //c = bgColor;
-                //c.a = _Color.a;
 
-                o.Normal = -normalize(gradientNormal(p)); // Calculate gradient normal
-                o.Albedo = _Color;
-                o.Smoothness = _Specular;
-                o.Metallic = _Metallic;
-                o.Alpha = _Color.a;
-            } 
+            float3 p = _WorldSpaceCameraPos + dir * hitDist;
+            float3 n = gradientNormal(p);
+   
+            //o.Normal = WorldNormalVector (IN, o.Normal); // Calculate gradient normal
+            o.Normal = WorldNormalVector (IN, mul(unity_WorldToObject,n));    
+            o.Albedo = _Color;
+            o.Smoothness = _Specular;
+            o.Metallic = _Metallic;
+            o.Alpha = _Color.a;
+            o.Emission = _EmissionColor;
+            o.Occlusion = 1;
         }
 
         void surf (Input IN, inout SurfaceOutputStandard o)
@@ -260,7 +257,7 @@
             float3 viewDirection = normalize(IN.worldPos  - _WorldSpaceCameraPos);
             
             /*** Raymarching ***/
-            render(viewDirection, IN.grabUV, o);
+            render(IN,viewDirection, IN.grabUV, o);
         }
 
         ENDCG

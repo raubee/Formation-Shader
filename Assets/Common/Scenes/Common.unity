@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.103773594, g: 0.103773594, b: 0.103773594, a: 1}
+  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1382384277}
-  m_IndirectSpecularColor: {r: 0.5345415, g: 0.5546168, b: 0.6007804, a: 1}
+  m_IndirectSpecularColor: {r: 0.24337305, g: 0.2637787, b: 0.31426993, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -49,13 +49,13 @@ LightmapSettings:
     serializedVersion: 2
     m_BounceScale: 1
     m_IndirectOutputScale: 1
-    m_AlbedoBoost: 4.99
+    m_AlbedoBoost: 1
     m_EnvironmentLightingMode: 0
     m_EnableBakedLightmaps: 0
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
     serializedVersion: 10
-    m_Resolution: 2
+    m_Resolution: 10
     m_BakeResolution: 40
     m_AtlasSize: 1024
     m_AO: 0
@@ -64,7 +64,7 @@ LightmapSettings:
     m_CompAOExponentDirect: 0
     m_Padding: 2
     m_LightmapParameters: {fileID: 0}
-    m_LightmapsBakeMode: 1
+    m_LightmapsBakeMode: 0
     m_TextureCompression: 1
     m_FinalGather: 0
     m_FinalGatherFiltering: 1
@@ -88,8 +88,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 112000006, guid: 5a3569856e83ae24684cc84ff250537b,
-    type: 2}
+  m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -283,8 +282,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 0.8113208, g: 0.65624535, b: 0.38652548, a: 1}
-  m_Intensity: 0.94
+  m_Color: {r: 0.8018868, g: 0.79208034, b: 0.7754094, a: 1}
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -318,13 +317,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382384276}
-  m_LocalRotation: {x: -0.19317502, y: -0.55086267, z: 0.42678598, w: -0.6907152}
+  m_LocalRotation: {x: -0.41640154, y: -0.53677523, z: 0.5087365, w: -0.5288378}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 132.519, y: -118.114, z: 146.119}
+  m_LocalEulerAnglesHint: {x: -620.6, y: -118.114, z: 146.119}
 --- !u!1 &1689505543
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,6 +379,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7291483180903030253, guid: 4476e9b5d4416b246b3f3fa006f9973d,
+        type: 3}
+      propertyPath: m_Name
+      value: Floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 7291483180903030253, guid: 4476e9b5d4416b246b3f3fa006f9973d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 7291483180903030249, guid: 4476e9b5d4416b246b3f3fa006f9973d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -434,11 +443,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7291483180903030253, guid: 4476e9b5d4416b246b3f3fa006f9973d,
-        type: 3}
-      propertyPath: m_Name
-      value: Floor
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4476e9b5d4416b246b3f3fa006f9973d, type: 3}

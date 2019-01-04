@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Exemple 3 - Raymarching
   m_Shader: {fileID: 4800000, guid: 031cc640ed4660b42975ed324f9ba2d7, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _DEBUG_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -59,28 +59,29 @@ Material:
     - _Amount: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
-    - _Debug: 0
+    - _Debug: 1
     - _DetailNormalMapScale: 1
-    - _Diffraction: 0.629
+    - _Diffraction: 0
+    - _Displacement: 0
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Metallic: 0.635
+    - _Metallic: 0.5
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Paste: 0.627
-    - _Round: 0.167
-    - _Shininess: 125
+    - _Paste: 0.022
+    - _Round: 0.237
+    - _Shininess: 190
     - _SmoothnessTextureChannel: 0
-    - _Specular: 1.54
+    - _Specular: 1
     - _SpecularCoeff: 32
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.30936277, g: 0.7061145, b: 0.8301887, a: 1}
+    - _Color: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _WorldPos: {r: -0.12, g: -0.18, b: 0, a: 1}
