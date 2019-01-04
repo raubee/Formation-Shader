@@ -1,0 +1,11 @@
+﻿#pragma kernel CSMain
+
+RWTexture2D<float4> Result;
+float Time;
+float Speed;
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    Result[id.xy] = float4(sin(id.x + Time * Speed), sin(id.y), 0.0, 0.0);
+}
