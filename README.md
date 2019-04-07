@@ -28,5 +28,7 @@ Unity implementation of a ray marching shader in a volume : https://www.shaderto
 
 ## Example 5 - Geometric shaders
 
-Wireframe
-
+### Grass shader
+<p align="center" >
+<img src="https://i.imgur.com/nYMjUxv.gif" alt="Grass" width="480"></img>
+</p>
