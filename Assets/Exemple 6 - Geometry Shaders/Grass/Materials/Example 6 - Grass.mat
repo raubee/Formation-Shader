@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Example 6 - Grass
+  m_Shader: {fileID: 4800000, guid: a2990f272933bd7438b1e0616d956da5, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _WindDistortionMap:
+        m_Texture: {fileID: 2800000, guid: 6cda489d5ce0d1e46a5e4a7d40c30545, type: 3}
+        m_Scale: {x: 0.1, y: 0.1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _BendRotationRandom: 0.391
+    - _BladeHeight: 0.45
+    - _BladeHeightRandom: 0.3
+    - _BladeWidth: 0.0204
+    - _BladeWidthRandom: 0.02
+    - _TessellationEdgeLength: 20.5
+    - _TessellationUniform: 25.7
+    - _TranslucentGain: 0.762
+    - _WindStrength: 0.05
+    m_Colors:
+    - _BottomColor: {r: 0.12941177, g: 0.50980395, b: 0.13725491, a: 1}
+    - _TopColor: {r: 0.42533007, g: 0.818, b: 0.04039504, a: 1}
+    - _WindFrequency: {r: 0.1, g: 0.1, b: 0, a: 0}
