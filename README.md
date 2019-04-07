@@ -14,7 +14,7 @@ Surface shaders examples from unity documentation : https://docs.unity3d.com/Man
 
 ## Example 2 - Custom Lighting Models
 
-Implementation of customs Lighting models : https://docs.unity3d.com/Manual/SL-SurfaceShaderLightingExamples.html
+Implementation of custom Lighting models : https://docs.unity3d.com/Manual/SL-SurfaceShaderLightingExamples.html
 
 ## Example 3 - Raymarching
 
